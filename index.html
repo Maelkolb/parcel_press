@@ -158,7 +158,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 44px 20px; color: var(--ink-3); text-align: center; font-size: 13.5px; }
 .empty svg { width: 30px; height: 30px; }
 
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 8px; overflow: hidden; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 8px; overflow: hidden; }
 .stats div { background: var(--surface-2); padding: 9px 6px; text-align: center; }
 .stats b { display: block; font-family: var(--mono); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .stats span { font-family: var(--mono); font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
@@ -704,10 +704,10 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
       </svg>
       <div>
         <h1>Parcel Press</h1>
-        <p class="tagline">Crop or compose a 100 × 150 mm shipping label</p>
+        <p class="tagline">Crop or compose a 100 × 150 mm shipping label — content on the top half only</p>
       </div>
     </div>
-    <div class="spec"><span>100 × 150 mm</span><i></i><span>300 dpi</span></div>
+    <div class="spec"><span>100 × 150 mm</span><i></i><span>top 75 mm used</span><i></i><span>300 dpi</span></div>
   </header>
 
   <nav class="modes" role="tablist" aria-label="Mode">
@@ -746,13 +746,13 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></svg>
             Snap to label edges
           </button>
-          <p class="note">Drag inside the frame to move it, pull a corner to resize. <b>Snap</b> finds the printed area on its own.</p>
+          <p class="note">Drag inside the frame to move it, pull a corner to resize. <b>Snap</b> finds the printed area on its own. The label is placed in the <b>top 75 mm</b> of the sheet; the bottom half stays blank because the printer cannot print it reliably.</p>
         </div>
       </div>
     </div>
 
     <div class="panel">
-      <header><span class="eyebrow">Preview</span><span class="eyebrow">Portrait 100 × 150</span></header>
+      <header><span class="eyebrow">Preview</span><span class="eyebrow">Top half of 100 × 150</span></header>
       <div class="body">
         <div class="empty" id="crop-empty">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>
@@ -763,13 +763,14 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
           <div class="stats">
             <div><b>100</b><span>Width mm</span></div>
             <div><b>150</b><span>Height mm</span></div>
+            <div><b>75</b><span>Top used mm</span></div>
             <div><b>300</b><span>DPI</span></div>
           </div>
           <div class="field">
             <span class="eyebrow">Rotation</span>
             <div class="chips" id="rot">
-              <button class="chip" data-v="0" aria-pressed="false">Upright</button>
-              <button class="chip" data-v="90" aria-pressed="true">Turn 90°</button>
+              <button class="chip" data-v="0" aria-pressed="true">Upright</button>
+              <button class="chip" data-v="90" aria-pressed="false">Turn 90°</button>
               <button class="chip" data-v="180" aria-pressed="false">Turn 180°</button>
               <button class="chip" data-v="270" aria-pressed="false">Turn 270°</button>
             </div>
@@ -820,17 +821,18 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
           <span class="eyebrow">To</span>
           <textarea id="to" spellcheck="false" placeholder="Customer name&#10;Street and number&#10;ZIP City&#10;Country"></textarea>
         </div>
-        <p class="note">Paste straight out of the order. The sender block stays on this device for next time.</p>
+        <p class="note">Paste straight out of the order. The sender block stays on this device for next time. Both addresses are laid out in the <b>top 75 mm</b> of the label; the bottom half stays blank.</p>
       </div>
     </div>
 
     <div class="panel">
-      <header><span class="eyebrow">Preview</span><span class="eyebrow">Landscape, printed portrait</span></header>
+      <header><span class="eyebrow">Preview</span><span class="eyebrow">Upright, top half</span></header>
       <div class="body">
         <div class="sheet"><canvas id="pv2"></canvas></div>
         <div class="stats">
           <div><b>100</b><span>Width mm</span></div>
           <div><b>150</b><span>Height mm</span></div>
+          <div><b>75</b><span>Top used mm</span></div>
           <div><b>300</b><span>DPI</span></div>
         </div>
         <div class="field">
@@ -859,7 +861,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     </header>
     <div class="body">
       <div class="outframe"><img id="out-img" alt="The finished 100 by 150 millimetre shipping label"></div>
-      <p class="note" id="hold-hint"><b>On iPhone:</b> press and hold the label above, then choose <b>Save to Photos</b> — and pick it up from there in LabelLife. The image is exactly 100 × 150 mm at 300 dpi, so print it at full size, no scaling.</p>
+      <p class="note" id="hold-hint"><b>On iPhone:</b> press and hold the label above, then choose <b>Save to Photos</b> — and pick it up from there in LabelLife. The image is exactly 100 × 150 mm at 300 dpi, so print it at full size, no scaling. Only the top half carries content; the blank bottom half is intended.</p>
       <div class="row" id="save-row" hidden>
         <button class="btn primary" id="save-pdf" hidden>Save PDF</button>
         <button class="btn primary" id="save-png">Save PNG</button>
@@ -883,6 +885,9 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 pdfjsLib.GlobalWorkerOptions.workerSrc = "inline";
 
 var W_MM = 100, H_MM = 150, DPI = 300, PX_MM = DPI / 25.4;
+/* The printer cannot print the lower half of a label reliably, so all
+   content is confined to the top USE_MM of the 150 mm sheet. */
+var USE_MM = 75;
 var MAX_PX = 22e6, MAX_SIDE = 4096;   // canvas ceilings that mobile Safari honours
 
 var $ = function (id) { return document.getElementById(id); };
@@ -920,7 +925,7 @@ function clearChips(id) {
 var page = null;          // pdf.js page
 var pageScale = 1;        // points -> pixels of #page canvas
 var crop = { x: 0, y: 0, w: 0, h: 0 };   // in #page canvas pixels
-var rotation = 90, fit = "contain";
+var rotation = 0, fit = "contain";
 
 var pageCv = $("page"), cropEl = $("crop"), holder = $("holder");
 
@@ -969,6 +974,7 @@ function load(f) {
     crop = { x: pageCv.width * .08, y: pageCv.height * .08, w: pageCv.width * .84, h: pageCv.height * .84 };
     cropEl.hidden = false;
     detect();
+    autoRotate();
     place();
     busy(false);
   }).catch(function (err) {
@@ -1096,17 +1102,49 @@ function margins() {
   return { h: Math.max(0, parseFloat($("mh").value) || 0), v: Math.max(0, parseFloat($("mv").value) || 0) };
 }
 
+/* preview only: marks where the usable top area ends and shades the unused
+   bottom half. Never drawn on the output canvas. */
+function guide(ctx, w, h, usedH, k) {
+  ctx.save();
+  ctx.fillStyle = "rgba(0,0,0,.045)";
+  ctx.fillRect(0, usedH, w, h - usedH);
+  ctx.strokeStyle = "#b8c2bf";
+  ctx.lineWidth = Math.max(1, 2 * k);
+  ctx.setLineDash([8 * k, 6 * k]);
+  ctx.beginPath(); ctx.moveTo(0, usedH); ctx.lineTo(w, usedH); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = "#9aa8a4";
+  ctx.font = (30 * k) + "px Arial, Helvetica, sans-serif";
+  ctx.textBaseline = "middle"; ctx.textAlign = "center";
+  ctx.fillText("not printed", w / 2, usedH + (h - usedH) / 2);
+  ctx.restore();
+}
+
 function drawCropPreview() {
   if (!page) return;
   var k = .30, m = margins();
   var outW = Math.round(W_MM * PX_MM * k), outH = Math.round(H_MM * PX_MM * k);
+  var usedH = Math.round(USE_MM * PX_MM * k);
   var cv = $("pv");
   cv.width = outW; cv.height = outH;
   cv.style.width = Math.round(outW / 1.4) + "px";
   var ctx = cv.getContext("2d");
   ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, outW, outH);
-  var box = layout(crop.w, crop.h, outW, outH, m.h * PX_MM * k, m.v * PX_MM * k);
+  var box = layout(crop.w, crop.h, outW, usedH, m.h * PX_MM * k, m.v * PX_MM * k);
   paint(ctx, pageCv, crop.x, crop.y, crop.w, crop.h, box);
+  guide(ctx, outW, outH, usedH, k);
+}
+
+/* picks upright or 90° — whichever lets the cropped label fill more of the
+   usable top area — and reflects it in the rotation chips */
+function autoRotate() {
+  var usedW = W_MM, usedH = USE_MM;
+  var upright = Math.min(usedW / crop.w, usedH / crop.h);   // scale when upright
+  var turned = Math.min(usedW / crop.h, usedH / crop.w);    // scale when turned 90°
+  rotation = turned > upright ? 90 : 0;
+  Array.prototype.forEach.call($("rot").querySelectorAll(".chip"), function (c) {
+    c.setAttribute("aria-pressed", String(parseInt(c.dataset.v, 10) === rotation));
+  });
 }
 
 chips("rot", function (v) { rotation = parseInt(v, 10); drawCropPreview(); });
@@ -1120,7 +1158,8 @@ chips("marg", function (v) { $("mh").value = v; $("mv").value = v; drawCropPrevi
 function cropOutput() {
   var m = margins();
   var outW = Math.round(W_MM * PX_MM), outH = Math.round(H_MM * PX_MM);
-  var box = layout(crop.w, crop.h, outW, outH, m.h * PX_MM, m.v * PX_MM);
+  var usedH = Math.round(USE_MM * PX_MM);
+  var box = layout(crop.w, crop.h, outW, usedH, m.h * PX_MM, m.v * PX_MM);
 
   // only the cropped region gets re-rendered, at just enough resolution
   var wPt = crop.w / pageScale, hPt = crop.h / pageScale;
@@ -1180,9 +1219,9 @@ from2.addEventListener("input", drawWritten);
 to2.addEventListener("input", drawWritten);
 chips("marg2", function (v) { margin2 = parseFloat(v); drawWritten(); });
 
-/* draws the landscape face of the label at any pixel scale */
+/* draws the address face upright into the top w × h area at any pixel scale
+   (the caller has already painted the whole sheet white) */
 function face(ctx, w, h, k) {
-  ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, w, h);
   var m = margin2 * PX_MM * k;
   var cw = w - m * 2, ch = h - m * 2;
   ctx.fillStyle = "#000";
@@ -1228,28 +1267,23 @@ function face(ctx, w, h, k) {
 function drawWritten() {
   var k = .30;
   var cv = $("pv2");
-  cv.width = Math.round(H_MM * PX_MM * k);
-  cv.height = Math.round(W_MM * PX_MM * k);
+  cv.width = Math.round(W_MM * PX_MM * k);
+  cv.height = Math.round(H_MM * PX_MM * k);
+  var usedH = Math.round(USE_MM * PX_MM * k);
   cv.style.width = Math.round(cv.width / 1.4) + "px";
-  face(cv.getContext("2d"), cv.width, cv.height, k);
+  var ctx = cv.getContext("2d");
+  ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height);
+  face(ctx, cv.width, usedH, k);
+  guide(ctx, cv.width, cv.height, usedH, k);
 }
 
 function writtenOutput() {
-  var land = document.createElement("canvas");
-  land.width = Math.round(H_MM * PX_MM);
-  land.height = Math.round(W_MM * PX_MM);
-  face(land.getContext("2d"), land.width, land.height, 1);
-
   var cv = document.createElement("canvas");
   cv.width = Math.round(W_MM * PX_MM);
   cv.height = Math.round(H_MM * PX_MM);
   var ctx = cv.getContext("2d");
   ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height);
-  ctx.save();
-  ctx.translate(cv.width / 2, cv.height / 2);
-  ctx.rotate(-Math.PI / 2);
-  ctx.drawImage(land, -land.width / 2, -land.height / 2);
-  ctx.restore();
+  face(ctx, cv.width, Math.round(USE_MM * PX_MM), 1);
   return cv;
 }
 
@@ -1274,7 +1308,7 @@ if (HOST === "artifact") {
   $("save-row").hidden = false;
   $("save-pdf").hidden = false;
   $("save-png").className = "btn ghost";
-  $("hold-hint").innerHTML = "<b>On iPhone:</b> press and hold the label above and choose <b>Save to Photos</b>, or use the buttons below. The label is exactly 100 × 150 mm at 300 dpi — print it at full size in LabelLife, no scaling.";
+  $("hold-hint").innerHTML = "<b>On iPhone:</b> press and hold the label above and choose <b>Save to Photos</b>, or use the buttons below. The label is exactly 100 × 150 mm at 300 dpi — print it at full size in LabelLife, no scaling. Only the top half carries content; the blank bottom half is intended.";
 }
 
 function present(cv, name) {
